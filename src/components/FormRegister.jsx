@@ -5,15 +5,12 @@ import {
   TextField,
   Box,
   Typography,
-  FormControl,
-  InputLabel,
-  Select,
   MenuItem,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const validationSchema = yup.object({
-  name: yup.string("Enter your full name").required("Email is required"),
+  name: yup.string("Enter your full name").required("Full name is required"),
   idNumber: yup
     .number("Enter your ID number")
     .required("ID number is required")
