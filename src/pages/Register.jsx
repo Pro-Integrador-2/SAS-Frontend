@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Container, Grid, Typography, Alert, Snackbar} from "@mui/material";
+import { Box, Container, Grid, Typography, Alert, Snackbar } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import SASAppBar from "../components/SASAppBar";
@@ -10,35 +10,41 @@ import axios from "axios";
 const Register = () => {
   const [image, setImage] = useState(null);
   const [showSnackbar, setShowSnackbar] = useState(false);
-  
+  const [processedImageUrl, setProcessedImageUrl] = useState(null);
+
+
   const handleSnackbarClose = () => {
     setShowSnackbar(false);
   };
 
   const submitRegister = async (values) => {
-    if(!image){
-     setShowSnackbar(true);
-    }else{
+    if (!image) {
+      setShowSnackbar(true);
+    } else {
 
       const formData = new FormData();
-    formData.append('img', image);
-    formData.append('values', JSON.stringify(values));
-    console.log(values)
+      formData.append('img', image);
+      formData.append('values', JSON.stringify(values));
+      console.log(values)
 
-    try {
-      
-      const response = await axios.post("http://127.0.0.1:5000/signup", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      try {
+
+        const { data } = await axios.post("http://127.0.0.1:5000/signup", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          responseType: 'blob'
+        });
+
+        const url = URL.createObjectURL(data);
+        setProcessedImageUrl(url);
 
 
 
 
-    } catch (error) {
-      console.error('Error al enviar la solicitud:', error);
-    }
+      } catch (error) {
+        console.error('Error al enviar la solicitud:', error);
+      }
     }
   };
 
@@ -49,11 +55,11 @@ const Register = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box sx={{ maxWidth: "100%" }}>
-      <Snackbar open={showSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
-        <Alert onClose={handleSnackbarClose} severity="error" variant="filled">
-          Photography is required
-        </Alert>
-      </Snackbar>
+        <Snackbar open={showSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
+          <Alert onClose={handleSnackbarClose} severity="error" variant="filled">
+            Photography is required
+          </Alert>
+        </Snackbar>
         <SASAppBar />
         <Container
           sx={{ display: "flex", justifyContent: "center", minWidth: "100%" }}
@@ -80,6 +86,11 @@ const Register = () => {
 
             <Grid item xs={12} md={6} mb={4}>
               <FormRegister submitRegister={submitRegister} />
+              {processedImageUrl && (
+                <Box mt={2} textAlign="center">
+                  <img src={processedImageUrl} alt="Processed face" style={{ width: '100%', maxHeight: '300px' }} />
+                </Box>
+              )}
             </Grid>
           </Grid>
         </Container>

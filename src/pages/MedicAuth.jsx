@@ -18,6 +18,7 @@ const MedicAuth = () => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState("success");
   const [alertMessage, setAlertMessage] = useState("");
+  const [auth, setAuth] = useState({});
 
 
   const handleImage = async (cameraImage) => {
@@ -25,11 +26,13 @@ const MedicAuth = () => {
     formData.append('img', cameraImage);
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/login", formData, {
+      const {data} = await axios.post("http://127.0.0.1:5000/login", formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
+      setAuth(data)
+      setImage(cameraImage)
       setVerificationStatus(true);
       setAlertSeverity("success");
       setAlertMessage("Profesional identificado con éxito");
@@ -88,7 +91,7 @@ const MedicAuth = () => {
         </Container>
       ) : (
         <Container sx={{ display: "flex", justifyContent: "center", minWidth: "100%" }}>
-          <AuthInfo />
+          <AuthInfo doctorData ={auth} img={image}/>
         </Container>
       )}
     </Box>
