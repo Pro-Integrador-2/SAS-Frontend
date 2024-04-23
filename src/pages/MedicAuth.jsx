@@ -29,7 +29,6 @@ const MedicAuth = () => {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-        
       });
       setVerificationStatus(true);
       setAlertSeverity("success");
@@ -39,9 +38,7 @@ const MedicAuth = () => {
       setVerificationStatus(false);
       setAlertSeverity("error");
       setAlertMessage("No se pudo verificar su información. Acceso denegado");
-    } finally {
     }
-    
   };
 
   const handleSnackbarClose = () => {
