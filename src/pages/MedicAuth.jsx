@@ -10,6 +10,7 @@ import {
 import AuthCamera from "../components/Camera";
 import SASAppBar from "../components/SASAppBar";
 import AuthInfo from "../components/AuthInfo";
+import axios from "axios";
 
 const MedicAuth = () => {
   const [image, setImage] = useState("");
@@ -18,21 +19,29 @@ const MedicAuth = () => {
   const [alertSeverity, setAlertSeverity] = useState("success");
   const [alertMessage, setAlertMessage] = useState("");
 
-  const handleImage = () => {
-    // Simulación de la verificación de la imagen con la base de datos
-    const isVerified = true; // Simulación de verificación exitosa/noExitosa
 
-    if (isVerified) {
+  const handleImage = async (cameraImage) => {
+    const formData = new FormData();
+    formData.append('img', cameraImage);
+
+    try {
+      const response = await axios.post("http://127.0.0.1:5000/login", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+        
+      });
       setVerificationStatus(true);
       setAlertSeverity("success");
       setAlertMessage("Profesional identificado con éxito");
-    } else {
+    } catch (error) {
+      console.error('Error al enviar la solicitud:', error);
       setVerificationStatus(false);
       setAlertSeverity("error");
       setAlertMessage("No se pudo verificar su información. Acceso denegado");
+    } finally {
     }
-
-    setShowSnackbar(true);
+    
   };
 
   const handleSnackbarClose = () => {

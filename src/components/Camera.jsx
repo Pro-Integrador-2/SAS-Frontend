@@ -84,6 +84,7 @@ const Camera = ({ handleImage }) => {
           Take a Photo
         </Button>
 
+        {!noVisible && 
         <Button
           variant="contained"
           onClick={handleResetClick}
@@ -91,7 +92,7 @@ const Camera = ({ handleImage }) => {
           style={{ backgroundColor: "#ff5362", marginLeft: "8px" }}
         >
           Reset
-        </Button>
+        </Button>}
       </Box>
       {image ? (
         <Box mt={2}>
