@@ -3,7 +3,7 @@ import { Box, Typography, Button } from "@mui/material";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
-const Camera = ({ handleImage }) => {
+const Camera = ({ handleImage, noVisible }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
