@@ -5,6 +5,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import SASAppBar from "../components/SASAppBar";
 import Camera from "../components/Camera";
 import FormRegister from "../components/FormRegister";
+import axios from "axios";
 
 const Register = () => {
   const [image, setImage] = useState(null);
@@ -14,18 +15,35 @@ const Register = () => {
     setShowSnackbar(false);
   };
 
-  const submitRegister = (values) => {
+  const submitRegister = async (values) => {
     if(!image){
      setShowSnackbar(true);
     }else{
-      alert(JSON.stringify({ ...values, image }, null, 2));
-      console.log({ ...values, image }); 
+
+      const formData = new FormData();
+    formData.append('img', image);
+    formData.append('values', JSON.stringify(values));
+    console.log(values)
+
+    try {
+      
+      const response = await axios.post("http://127.0.0.1:5000/signup", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+
+
+
+    } catch (error) {
+      console.error('Error al enviar la solicitud:', error);
+    }
     }
   };
 
   const handleImage = (cameraImage) => {
     setImage(cameraImage);
-    console.log("Image: ", image);
   };
 
   return (
