@@ -19,9 +19,9 @@ const validationSchema = yup.object({
     .number("Enter your Professional ID number")
     .required("Professional ID number is required")
     .typeError("Professional ID should be only a number"),
-  specialty: yup
-    .string("Enter your Specialty")
-    .required("Specialty is required"),
+  speciality: yup
+    .string("Enter your Speciality")
+    .required("Speciality is required"),
   email: yup
     .string("Enter your email")
     .email("Enter a valid email")
@@ -35,7 +35,7 @@ const FormRegister = ({ submitRegister }) => {
       name: "",
       idNumber: "",
       idProfessionalNumber: "",
-      specialty: "",
+      speciality: "",
       email: "",
       birthday: null,
     },
@@ -103,14 +103,14 @@ const FormRegister = ({ submitRegister }) => {
 
       <TextField
         fullWidth
-        id="specialty"
-        name="specialty"
-        label="Specialty"
-        value={formik.values.specialty}
+        id="speciality"
+        name="speciality"
+        label="Speciality"
+        value={formik.values.speciality}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        error={formik.touched.specialty && Boolean(formik.errors.specialty)}
-        helperText={formik.touched.specialty && formik.errors.specialty}
+        error={formik.touched.speciality && Boolean(formik.errors.speciality)}
+        helperText={formik.touched.speciality && formik.errors.speciality}
         select
       >
         <MenuItem value="Doctor">Doctor</MenuItem>
